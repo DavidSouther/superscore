@@ -1,0 +1,20 @@
+{
+  "name": "superscore",
+  "homepage": "https://github.com/DavidSouther/superscore",
+  "version": "0.1.0",
+  "author": {
+    "name": "David Souther",
+    "email": "<davidsouther@gmail.com>"
+  },
+  "description": "A variety of useful extensions to Underscore.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DavidSouther/superscore.git"
+  },
+  "keywords": [
+    "underscore",
+    "ajax",
+    "pubsub"
+  ],
+  "licenses": [{"type": "MIT"}]
+}
