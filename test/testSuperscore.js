@@ -14,7 +14,8 @@ test("Underscore utils", function(){
 	ok(_.indexBy && _.noop, "Underscore has additional basics.");
 	ok(_.on && _.once && _.off && _.trigger, "Underscore has additional pubsub?");
 	ok(_.ajax && _.get && _.post, "Does Underscore have additional ajax?");
-	ok(_.Deferred && _.Callbacks && _.when, "Unserscore has async utils.");
+	ok(_.Deferred && _.Callbacks && _.when, "Underscore has async utils.");
+	ok(_.UUID && _.UUID.v4 && _.UUID.v5, "Underscore UUID (4, 5) support.");
 });
 
 }(jQuery));
