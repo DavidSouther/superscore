@@ -5,77 +5,6 @@
 //     https://github.com/DavidSouther/superscore
 
 (function(_, $){
-
-	// // Let's borrow a couple of things from Underscore that we'll need
-
-	// // _.each
-	// var breaker = {},
-	// 		AP = Array.prototype,
-	// 		OP = Object.prototype,
-
-	// 		hasOwn = OP.hasOwnProperty,
-	// 		toString = OP.toString,
-	// 		forEach = AP.forEach,
-	// 		slice = AP.slice;
-
-	// var _each = function( obj, iterator, context ) {
-	// 	var key, i, l;
-
-	// 	if ( !obj ) {
-	// 		return;
-	// 	}
-	// 	if ( forEach && obj.forEach === forEach ) {
-	// 		obj.forEach( iterator, context );
-	// 	} else if ( obj.length === +obj.length ) {
-	// 		for ( i = 0, l = obj.length; i < l; i++ ) {
-	// 			if ( i in obj && iterator.call( context, obj[i], i, obj ) === breaker ) {
-	// 				return;
-	// 			}
-	// 		}
-	// 	} else {
-	// 		for ( key in obj ) {
-	// 			if ( hasOwn.call( obj, key ) ) {
-	// 				if ( iterator.call( context, obj[key], key, obj) === breaker ) {
-	// 					return;
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// };
-
-	// // _.isFunction
-	// var _isFunction = function( obj ) {
-	// 	return !!(obj && obj.constructor && obj.call && obj.apply);
-	// };
-
-	// // _.extend
-	// var _extend = function( obj ) {
-
-	// 	_each( slice.call( arguments, 1), function( source ) {
-	// 		var prop;
-
-	// 		for ( prop in source ) {
-	// 			if ( source[prop] !== void 0 ) {
-	// 				obj[ prop ] = source[ prop ];
-	// 			}
-	// 		}
-	// 	});
-	// 	return obj;
-	// };
-
-	// // And some jQuery specific helpers
-
-	// var class2type = { "[object Array]": "array", "[object Function]": "function" };
-
-	// var _type = function( obj ) {
-	// 	return !obj ?
-	// 		String( obj ) :
-	// 		class2type[ toString.call(obj) ] || "object";
-	// };
-
-	// Now start the jQuery-cum-Underscore implementation. Some very
-	// minor changes to the jQuery source to get this working.
-
 	// Internal Deferred namespace
 	var _d = {};
 
@@ -417,17 +346,7 @@
 			return promise;
 		};
 
-	// // Try exporting as a Common.js Module
-	// if ( typeof module !== "undefined" && module.exports ) {
-	// 	module.exports = _d;
 
-	// // Or mixin to Underscore.js
-	// } else if ( typeof root._ !== "undefined" ) {
-		// root._.mixin(_d);
 		_.mixin(_d);
-	// // Or assign it to window._
-	// } else {
-	// 	root._ = _d;
-	// }
 
 }.call(this, _, $));
