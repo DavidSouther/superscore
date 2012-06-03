@@ -1,8 +1,8 @@
-// superscore - v0.1.0 - 2012-06-03
+// superscore - v0.1.1 - 2012-06-03
 // https://github.com/DavidSouther/superscore
 // Copyright (c) 2012 David Souther; Licensed MIT
 
-//     superscore ajax.js 0.1.0
+//     superscore ajax.js 0.1.1
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
@@ -67,84 +67,36 @@ _.mixin({
 
 
 }.call(this, _, jQuery || null));
-//     superscore deferred.js 0.1.0
+//     superscore core.js 0.1.1
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
 //     https://github.com/DavidSouther/superscore
 
 (function(_, $){
+"use strict";
 
-	// // Let's borrow a couple of things from Underscore that we'll need
+// ### Underscore Utilities
+_.mixin({
+	// The default underscore indexOf uses a literal value; we often want to use an comparator.
+	indexBy: function(list, func) {
+		list = list || []; func = func || function(){return false;};
+		for (var i = 0, l = list.length; i < l; i++) {
+			if (func(list[i])){ return i; }
+		}
+		return -1;
+	},
+	// noop
+	noop: function(){}
+});
+}.call(this, _, jQuery));
+//     superscore deferred.js 0.1.1
+//     (c) 2012 David Souther
+//     superscore is freely distributable under the MIT license.
+//     For all details and documentation:
+//     https://github.com/DavidSouther/superscore
 
-	// // _.each
-	// var breaker = {},
-	// 		AP = Array.prototype,
-	// 		OP = Object.prototype,
-
-	// 		hasOwn = OP.hasOwnProperty,
-	// 		toString = OP.toString,
-	// 		forEach = AP.forEach,
-	// 		slice = AP.slice;
-
-	// var _each = function( obj, iterator, context ) {
-	// 	var key, i, l;
-
-	// 	if ( !obj ) {
-	// 		return;
-	// 	}
-	// 	if ( forEach && obj.forEach === forEach ) {
-	// 		obj.forEach( iterator, context );
-	// 	} else if ( obj.length === +obj.length ) {
-	// 		for ( i = 0, l = obj.length; i < l; i++ ) {
-	// 			if ( i in obj && iterator.call( context, obj[i], i, obj ) === breaker ) {
-	// 				return;
-	// 			}
-	// 		}
-	// 	} else {
-	// 		for ( key in obj ) {
-	// 			if ( hasOwn.call( obj, key ) ) {
-	// 				if ( iterator.call( context, obj[key], key, obj) === breaker ) {
-	// 					return;
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// };
-
-	// // _.isFunction
-	// var _isFunction = function( obj ) {
-	// 	return !!(obj && obj.constructor && obj.call && obj.apply);
-	// };
-
-	// // _.extend
-	// var _extend = function( obj ) {
-
-	// 	_each( slice.call( arguments, 1), function( source ) {
-	// 		var prop;
-
-	// 		for ( prop in source ) {
-	// 			if ( source[prop] !== void 0 ) {
-	// 				obj[ prop ] = source[ prop ];
-	// 			}
-	// 		}
-	// 	});
-	// 	return obj;
-	// };
-
-	// // And some jQuery specific helpers
-
-	// var class2type = { "[object Array]": "array", "[object Function]": "function" };
-
-	// var _type = function( obj ) {
-	// 	return !obj ?
-	// 		String( obj ) :
-	// 		class2type[ toString.call(obj) ] || "object";
-	// };
-
-	// Now start the jQuery-cum-Underscore implementation. Some very
-	// minor changes to the jQuery source to get this working.
-
+(function(_, $){
 	// Internal Deferred namespace
 	var _d = {};
 
@@ -486,21 +438,11 @@ _.mixin({
 			return promise;
 		};
 
-	// // Try exporting as a Common.js Module
-	// if ( typeof module !== "undefined" && module.exports ) {
-	// 	module.exports = _d;
 
-	// // Or mixin to Underscore.js
-	// } else if ( typeof root._ !== "undefined" ) {
-		// root._.mixin(_d);
 		_.mixin(_d);
-	// // Or assign it to window._
-	// } else {
-	// 	root._ = _d;
-	// }
 
 }.call(this, _, $));
-//     superscore extend.js 0.1.0
+//     superscore extend.js 0.1.1
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
@@ -616,7 +558,7 @@ _.mixin({
 });
 
 }.call(this, _, jQuery || null));
-//     superscore pubsub.js 0.1.0
+//     superscore pubsub.js 0.1.1
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
