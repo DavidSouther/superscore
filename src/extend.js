@@ -1,4 +1,4 @@
-//     superscore extend.js 0.1.0
+//     superscore extend.js 0.1.1
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
