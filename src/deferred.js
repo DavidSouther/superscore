@@ -20,6 +20,10 @@
 			return object;
 	}
 
+	// Save references to some utilities
+	var _type = $ ? $.type : (_.type ? _.type : function(thing){return "unknown";});
+	var slice = Array.prototype.slice;
+
 	_d.Callbacks = $ ? $.Callbacks : function( flags ) {
 
 		// Convert flags from String-formatted to Object-formatted
@@ -243,7 +247,7 @@
 						},
 						pipe: function( fnDone, fnFail, fnProgress ) {
 								return _d.Deferred(function( newDefer ) {
-										_each( {
+										_.each( {
 												done: [ fnDone, "resolve" ],
 												fail: [ fnFail, "reject" ],
 												progress: [ fnProgress, "notify" ]
@@ -251,10 +255,10 @@
 												var fn = data[ 0 ],
 														action = data[ 1 ],
 														returned;
-												if ( _isFunction( fn ) ) {
+												if ( _.isFunction( fn ) ) {
 														deferred[ handler ](function() {
 																returned = fn.apply( this, arguments );
-																if ( returned && _isFunction( returned.promise ) ) {
+																if ( returned && _.isFunction( returned.promise ) ) {
 																		returned.promise().then( newDefer.resolve, newDefer.reject, newDefer.notify );
 																} else {
 																		newDefer[ action + "With" ]( this === deferred ? newDefer : this, [ returned ] );
@@ -311,7 +315,7 @@
 				pValues = new Array( length ),
 				count = length,
 				pCount = length,
-				deferred = length <= 1 && firstParam && _isFunction( firstParam.promise ) ?
+				deferred = length <= 1 && firstParam && _.isFunction( firstParam.promise ) ?
 						firstParam :
 						_d.Deferred(),
 				promise = deferred.promise();
@@ -331,7 +335,7 @@
 			}
 			if ( length > 1 ) {
 				for ( ; i < length; i++ ) {
-					if ( args[ i ] && args[ i ].promise && _isFunction( args[ i ].promise ) ) {
+					if ( args[ i ] && args[ i ].promise && _.isFunction( args[ i ].promise ) ) {
 						args[ i ].promise().then( resolveFunc(i), deferred.reject, progressFunc(i) );
 					} else {
 						--count;
@@ -349,4 +353,4 @@
 
 		_.mixin(_d);
 
-}.call(this, _, $));
+}.call(this, _, jQuery || null));

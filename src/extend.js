@@ -103,7 +103,7 @@ var isPlainObject = $ ? $.isPlainObject : function( obj ) {
 	return key === undefined || hasOwn.call( obj, key );
 };
 var isWindow = $ ? $.isWindow : function( obj ) {
-	return obj !== null && obj == obj.window;
+	return obj !== null && obj === obj.window;
 };
 
 _.mixin({

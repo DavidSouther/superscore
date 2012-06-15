@@ -9,9 +9,10 @@
 
 // #### Ajax, through jQuery if possible.
 var ajax = $ ? $.ajax : function (options){
-	var xhr, d = _.Deferred();
+	var xhr, XHR, d = _.Deferred();
 	// Nice clean way to get an xhr
-	xhr = new (window.ActiveXObject || XMLHttpRequest)('Microsoft.XMLHTTP');
+	XHR = window.ActiveXObject || XMLHttpRequest;
+	xhr = new XHR('Microsoft.XMLHTTP');
 	xhr.open(options.type || 'GET', options.url, true);
 	if ('overrideMimeType' in xhr) {
 		xhr.overrideMimeType(options.dataType || 'text/plain');
@@ -63,3 +64,5 @@ _.mixin({
 
 
 }.call(this, _, jQuery || null));
+
+/*global window:false, XMLHttpRequest:false*/
