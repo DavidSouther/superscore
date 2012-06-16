@@ -1,4 +1,4 @@
-Superscore provides a variety of extensions to (Underscore)[http://underscorejs.org]. Underscore's fantastic support for collection and data structure handling in Javascript is the best of any library today, bar none. These functions in Superscore aim to provide further snippets of commonly used functionality, including callback chains, eventing, and other small but often-needed tools.
+Superscore provides a variety of extensions to [Underscore](http://underscorejs.org). Underscore's fantastic support for collection and data structure handling in Javascript is the best of any library today, bar none. These functions in Superscore aim to provide further snippets of commonly used functionality, including callback chains, eventing, and other small but often-needed tools.
 
 ## Features ##
 
