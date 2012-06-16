@@ -9,8 +9,18 @@ module.exports = function(grunt) {
 				'// Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
 				' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>'
 		},
+		clean: {
+			app: {
+				src: ["docs", "dist"]
+			}
+		},
 		lint: {
 			files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
+		},
+		docco: {
+			app: {
+				src: ['src/*js']
+			}
 		},
 		qunit: {
 			files: ['test/**/*.html']
@@ -58,5 +68,5 @@ module.exports = function(grunt) {
 
 	//grunt.loadNpmTasks('grunt-coffee');
 
-	grunt.registerTask('default', 'lint concat min');
+	grunt.registerTask('default', 'clean lint docco concat min');
 };
