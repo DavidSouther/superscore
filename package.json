@@ -14,7 +14,9 @@
   "keywords": [
     "underscore",
     "ajax",
-    "pubsub"
+    "pubsub",
+    "utf8",
+    "uuid"
   ],
   "licenses": [{"type": "MIT"}]
 }
