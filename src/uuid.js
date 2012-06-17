@@ -1,4 +1,4 @@
-//     superscore uuid.js 0.2.0
+//     superscore uuid.js 0.2.2
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
@@ -227,10 +227,11 @@ Utf8.decode = function(strUtf) {
 	return strUni;
 };
 
-_.extend({
-	UUID: UUID,
-	Utf8: Utf8,
-	Sha1: Sha1
+// UUID, etc are objects that need to be attached to _, not functions to be mixed in.
+_.extend(_, {
+	'UUID': UUID,
+	'Utf8': Utf8,
+	'Sha1': Sha1
 });
 
 }.call(this, _));
