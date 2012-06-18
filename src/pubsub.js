@@ -58,7 +58,7 @@ _.mixin({
 
 		// If there aren't any handlers for this event, don't do anything.
 		if(this.isObject(obj.__event_handlers) && event in obj.__event_handlers) {
-			obj.__event_handlers.fireWith(obj, args);
+			obj.__event_handlers[event].fireWith(obj, args);
 		}
 		return this;
 	},
