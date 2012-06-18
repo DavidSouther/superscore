@@ -8,7 +8,7 @@
 
 // Build several namespaces, globally...
 var UUID = {};
-var Sha1 = {};
+var Sha1 = function(str){return Sha1.hash(str, true);};
 var Utf8 = {};
 
 

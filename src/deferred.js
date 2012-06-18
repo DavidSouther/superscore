@@ -4,10 +4,7 @@
 //     For all details and documentation:
 //     https://github.com/DavidSouther/superscore
 
-(function(_, $){
-	// Internal Deferred namespace
-	var _d = {};
-
+(function(_){
 	var flagsCache = {};
 	// Convert String-formatted flags into Object-formatted ones and store in cache
 	function createFlags( flags ) {
@@ -21,10 +18,9 @@
 	}
 
 	// Save references to some utilities
-	var _type = $ ? $.type : (_.type ? _.type : function(thing){return "unknown";});
 	var slice = Array.prototype.slice;
 
-	_d.Callbacks = $ ? $.Callbacks : function( flags ) {
+	_.Callbacks = function( flags ) {
 
 		// Convert flags from String-formatted to Object-formatted
 		// (we check in cache first)
@@ -55,11 +51,10 @@
 					actual;
 				for ( i = 0, length = args.length; i < length; i++ ) {
 					elem = args[ i ];
-					type = _type( elem );
-					if ( type === "array" ) {
+					if ( _.isArray(elem) ) {
 						// Inspect recursively
 						add( elem );
-					} else if ( type === "function" ) {
+					} else if ( _.isFunction(elem) ) {
 						// Add if not in unique mode and callback is not in
 						if ( !flags.unique || !self.has( elem ) ) {
 							list.push( elem );
@@ -214,143 +209,140 @@
 		return self;
 	};
 
-	_d.Deferred = $ ? $.Deferred : function( func ) {
-			var doneList = _d.Callbacks( "once memory" ),
-				failList = _d.Callbacks( "once memory" ),
-				progressList = _d.Callbacks( "memory" ),
-				state = "pending",
-				lists = {
-						resolve: doneList,
-						reject: failList,
-						notify: progressList
-				},
-				promise = {
-						done: doneList.add,
-						fail: failList.add,
-						progress: progressList.add,
+	_.Deferred = function( func ) {
+		var doneList = _.Callbacks( "once memory" ),
+			failList = _.Callbacks( "once memory" ),
+			progressList = _.Callbacks( "memory" ),
+			state = "pending",
+			lists = {
+					resolve: doneList,
+					reject: failList,
+					notify: progressList
+			},
+			promise = {
+					done: doneList.add,
+					fail: failList.add,
+					progress: progressList.add,
 
-						state: function() {
-								return state;
-						},
+					state: function() {
+							return state;
+					},
 
-						// Deprecated
-						isResolved: doneList.fired,
-						isRejected: failList.fired,
+					// Deprecated
+					isResolved: doneList.fired,
+					isRejected: failList.fired,
 
-						then: function( doneCallbacks, failCallbacks, progressCallbacks ) {
-								deferred.done( doneCallbacks ).fail( failCallbacks ).progress( progressCallbacks );
-								return this;
-						},
-						always: function() {
-								deferred.done.apply( deferred, arguments ).fail.apply( deferred, arguments );
-								return this;
-						},
-						pipe: function( fnDone, fnFail, fnProgress ) {
-								return _d.Deferred(function( newDefer ) {
-										_.each( {
-												done: [ fnDone, "resolve" ],
-												fail: [ fnFail, "reject" ],
-												progress: [ fnProgress, "notify" ]
-										}, function( data, handler ) {
-												var fn = data[ 0 ],
-														action = data[ 1 ],
-														returned;
-												if ( _.isFunction( fn ) ) {
-														deferred[ handler ](function() {
-																returned = fn.apply( this, arguments );
-																if ( returned && _.isFunction( returned.promise ) ) {
-																		returned.promise().then( newDefer.resolve, newDefer.reject, newDefer.notify );
-																} else {
-																		newDefer[ action + "With" ]( this === deferred ? newDefer : this, [ returned ] );
-																}
-														});
-												} else {
-														deferred[ handler ]( newDefer[ action ] );
-												}
-										});
-								}).promise();
-						},
-						// Get a promise for this deferred
-						// If obj is provided, the promise aspect is added to the object
-						promise: function( obj ) {
-								if ( !obj ) {
-										obj = promise;
-								} else {
-										for ( var key in promise ) {
-												obj[ key ] = promise[ key ];
-										}
-								}
-								return obj;
-						}
-				},
-				deferred = promise.promise({}),
-				key;
-
-				for ( key in lists ) {
-						deferred[ key ] = lists[ key ].fire;
-						deferred[ key + "With" ] = lists[ key ].fireWith;
-				}
-
-				// Handle state
-				deferred.done( function() {
-					state = "resolved";
-				}, failList.disable, progressList.lock ).fail( function() {
-					state = "rejected";
-				}, doneList.disable, progressList.lock );
-
-				// Call given func if any
-				if ( func ) {
-					func.call( deferred, deferred );
-				}
-
-				// All done!
-				return deferred;
-		};
-
-		// Deferred helper
-		_d.when = $ ? $.when : function( firstParam ) {
-			var args = slice.call( arguments, 0 ),
-				i = 0,
-				length = args.length,
-				pValues = new Array( length ),
-				count = length,
-				pCount = length,
-				deferred = length <= 1 && firstParam && _.isFunction( firstParam.promise ) ?
-						firstParam :
-						_d.Deferred(),
-				promise = deferred.promise();
-			function resolveFunc( i ) {
-				return function( value ) {
-					args[ i ] = arguments.length > 1 ? slice.call( arguments, 0 ) : value;
-					if ( !( --count ) ) {
-						deferred.resolveWith( deferred, args );
+					then: function( doneCallbacks, failCallbacks, progressCallbacks ) {
+							deferred.done( doneCallbacks ).fail( failCallbacks ).progress( progressCallbacks );
+							return this;
+					},
+					always: function() {
+							deferred.done.apply( deferred, arguments ).fail.apply( deferred, arguments );
+							return this;
+					},
+					pipe: function( fnDone, fnFail, fnProgress ) {
+							return _.Deferred(function( newDefer ) {
+									_.each( {
+											done: [ fnDone, "resolve" ],
+											fail: [ fnFail, "reject" ],
+											progress: [ fnProgress, "notify" ]
+									}, function( data, handler ) {
+											var fn = data[ 0 ],
+													action = data[ 1 ],
+													returned;
+											if ( _.isFunction( fn ) ) {
+													deferred[ handler ](function() {
+															returned = fn.apply( this, arguments );
+															if ( returned && _.isFunction( returned.promise ) ) {
+																	returned.promise().then( newDefer.resolve, newDefer.reject, newDefer.notify );
+															} else {
+																	newDefer[ action + "With" ]( this === deferred ? newDefer : this, [ returned ] );
+															}
+													});
+											} else {
+													deferred[ handler ]( newDefer[ action ] );
+											}
+									});
+							}).promise();
+					},
+					// Get a promise for this deferred
+					// If obj is provided, the promise aspect is added to the object
+					promise: function( obj ) {
+							if ( !obj ) {
+									obj = promise;
+							} else {
+									for ( var key in promise ) {
+											obj[ key ] = promise[ key ];
+									}
+							}
+							return obj;
 					}
-				};
+			},
+			deferred = promise.promise({}),
+			key;
+
+			for ( key in lists ) {
+					deferred[ key ] = lists[ key ].fire;
+					deferred[ key + "With" ] = lists[ key ].fireWith;
 			}
-			function progressFunc( i ) {
-				return function( value ) {
-					pValues[ i ] = arguments.length > 1 ? slice.call( arguments, 0 ) : value;
-					deferred.notifyWith( promise, pValues );
-				};
+
+			// Handle state
+			deferred.done( function() {
+				state = "resolved";
+			}, failList.disable, progressList.lock ).fail( function() {
+				state = "rejected";
+			}, doneList.disable, progressList.lock );
+
+			// Call given func if any
+			if ( func ) {
+				func.call( deferred, deferred );
 			}
-			if ( length > 1 ) {
-				for ( ; i < length; i++ ) {
-					if ( args[ i ] && args[ i ].promise && _.isFunction( args[ i ].promise ) ) {
-						args[ i ].promise().then( resolveFunc(i), deferred.reject, progressFunc(i) );
-					} else {
-						--count;
-					}
-				}
-				if ( !count ) {
+
+			// All done!
+			return deferred;
+	};
+
+	// Deferred helper
+	_.when = function( firstParam ) {
+		var args = slice.call( arguments, 0 ),
+			i = 0,
+			length = args.length,
+			pValues = new Array( length ),
+			count = length,
+			pCount = length,
+			deferred = length <= 1 && firstParam && _.isFunction( firstParam.promise ) ?
+					firstParam :
+					_.Deferred(),
+			promise = deferred.promise();
+		function resolveFunc( i ) {
+			return function( value ) {
+				args[ i ] = arguments.length > 1 ? slice.call( arguments, 0 ) : value;
+				if ( !( --count ) ) {
 					deferred.resolveWith( deferred, args );
 				}
-			} else if ( deferred !== firstParam ) {
-				deferred.resolveWith( deferred, length ? [ firstParam ] : [] );
+			};
+		}
+		function progressFunc( i ) {
+			return function( value ) {
+				pValues[ i ] = arguments.length > 1 ? slice.call( arguments, 0 ) : value;
+				deferred.notifyWith( promise, pValues );
+			};
+		}
+		if ( length > 1 ) {
+			for ( ; i < length; i++ ) {
+				if ( args[ i ] && args[ i ].promise && _.isFunction( args[ i ].promise ) ) {
+					args[ i ].promise().then( resolveFunc(i), deferred.reject, progressFunc(i) );
+				} else {
+					--count;
+				}
 			}
-			return promise;
-		};
+			if ( !count ) {
+				deferred.resolveWith( deferred, args );
+			}
+		} else if ( deferred !== firstParam ) {
+			deferred.resolveWith( deferred, length ? [ firstParam ] : [] );
+		}
+		return promise;
+	};
 
-
-		_.mixin(_d);
-
-}.call(this, _, jQuery || null));
+}.call(this, _));

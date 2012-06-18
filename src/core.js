@@ -18,6 +18,7 @@ _.mixin({
 		}
 		return -1;
 	},
+
 	// ## noop
 	noop: function(){},
 
@@ -35,11 +36,11 @@ _.mixin({
 });
 
 // ## Underscore Utilities
-var old_extend = _.extend,
-	hasOwn = Object.prototype.hasOwnProperty;
+_._extend = _.extend;
+var hasOwn = Object.prototype.hasOwnProperty;
 
 // ### Underscore's extend doesn't do deep extension. Use jQuery's (^c/^v from jQuery core).
-var extend = $ ? $.extend : function() {
+_.extend = function() {
 	var options, name, src, copy, copyIsArray, clone,
 		target = arguments[0] || {},
 		i = 1,
@@ -101,11 +102,11 @@ var extend = $ ? $.extend : function() {
 	// Return the modified object
 	return target;
 };
-var isPlainObject = $ ? $.isPlainObject : function( obj ) {
+_.isPlainObject = function( obj ) {
 	// Must be an Object.
 	// Because of IE, we also have to check the presence of the constructor property.
 	// Make sure that DOM nodes and window objects don't pass through, as well
-	if ( !obj || _.type(obj) !== "object" || obj.nodeType || _.isWindow( obj ) ) {
+	if ( !obj || !_.isObject(obj) || obj.nodeType || _.isWindow( obj ) ) {
 		return false;
 	}
 
@@ -130,15 +131,8 @@ var isPlainObject = $ ? $.isPlainObject : function( obj ) {
 	return key === undefined || hasOwn.call( obj, key );
 };
 
-var isWindow = $ ? $.isWindow : function( obj ) {
+_.isWindow = $ ? $.isWindow : function( obj ) {
 	return obj !== null && obj === obj.window;
 };
-
-_.mixin({
-	_extend: old_extend,
-	extend: extend,
-	isPlainObject: isPlainObject,
-	isWindow: isWindow
-});
 
 }.call(this, _, jQuery || null));
