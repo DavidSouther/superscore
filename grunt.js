@@ -60,7 +60,9 @@ module.exports = function(grunt) {
 				jQuery:false,
 				JEFRi:false,
 				UUID: false,
-				_:false
+				_:false,
+				window: false,
+				XMLHttpRequest: false
 			}
 		},
 		uglify: {}
