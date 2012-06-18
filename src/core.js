@@ -1,4 +1,4 @@
-//     superscore core.js 0.2.3
+//     superscore core.js 0.2.4
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
@@ -9,6 +9,7 @@
 
 // Missing from Underscore.
 _.mixin({
+	// ## indexBy*(list, func)*
 	// The default underscore indexOf uses a literal value; we often want to use an comparator. This function returns the index of the first element in the list that the comparator returns truthy when evaluating, or -1 if no elements match.
 	indexBy: function(list, func) {
 		list = list || []; func = func || function(){return false;};
@@ -17,15 +18,27 @@ _.mixin({
 		}
 		return -1;
 	},
-	// noop
-	noop: function(){}
+	// ## noop
+	noop: function(){},
+
+	// ### symmetricDifference*(set1, set2[, ...setN])*
+	// The symmetric of two sets is is the set of elements in either set, but not their intersection.
+	// If two sets are equal, the symmetric difference is empty.
+	symmetricDifference: function(){
+		return _.reduce(arguments, function(first, second){
+			return _.union(
+				_.difference(first, second),
+				_.difference(second, first)
+			);
+		});
+	}
 });
 
-// ### Underscore Utilities
+// ## Underscore Utilities
 var old_extend = _.extend,
 	hasOwn = Object.prototype.hasOwnProperty;
 
-// #### Underscore's extend doesn't do deep extension. Use jQuery's (^c/^v from jQuery core).
+// ### Underscore's extend doesn't do deep extension. Use jQuery's (^c/^v from jQuery core).
 var extend = $ ? $.extend : function() {
 	var options, name, src, copy, copyIsArray, clone,
 		target = arguments[0] || {},
