@@ -7,11 +7,12 @@
 (function(_, $){
 "use strict";
 
-// ### Pubsub with jQuery-backed eventing.
+// ## Pubsub with jQuery-backed eventing
 // This eventing library uses pubsub channels attached to specific object instances.
 // If a channel is used with an object, it becomes associated implicitly with that object.
 // If a channel is used without an object, it is in the global pubsub scope.
 _.mixin({
+	// ### on*([object, ]event, callback)*
 	// Register a function to get called when a certain event is published.
 	// Any event handlers attached after an event has been triggered at least once will
 	// immediately be called with the most recently triggered value.
@@ -32,6 +33,7 @@ _.mixin({
 		obj.__event_handlers[event].add(callback);
 		return this;
 	},
+	// ### once*([object, ]event, callback)*
 	// Register a function that will be called a single time when the event is published.
 	once: function(obj, event, callback) {
 		// Use jQuery to handle DOM events.
@@ -44,6 +46,7 @@ _.mixin({
 		// Register the self-removing callback normally.
 		this.on(obj, event, callback);
 	},
+	// ### trigger*([object, ]event, args)*
 	// Publish an event, passing args to each function registered. Each callback will
 	// be executed with `obj` as their `this` context.
 	trigger: function(obj, event, args) {
@@ -59,6 +62,7 @@ _.mixin({
 		}
 		return this;
 	},
+	// ### off*([object, ]event, callback)*
 	// Remove a certain callback from an event chain.
 	off: function(obj, event, callback) {
 		// Use jQuery to handle DOM events.

@@ -7,7 +7,7 @@
 (function(_, $){
 "use strict";
 
-// #### Ajax, through jQuery if possible.
+// ## Ajax, through jQuery if possible.
 var ajax = $ ? $.ajax : function (options){
 	var xhr, XHR, d = _.Deferred();
 
@@ -54,6 +54,7 @@ var ajax = $ ? $.ajax : function (options){
 	return d.promise();
 };
 
+// ### get*(url[, options])*
 // Shorthand for a GET request.
 var get = $ ? $.get : function(url, options){
 	options = options || {};
@@ -63,6 +64,7 @@ var get = $ ? $.get : function(url, options){
 	return _.ajax(options);
 };
 
+// ### post*(url[, options])*
 // Shorthand for a POST request.
 var post = $ ? $.post : function(url, options){
 	options = options || {};
