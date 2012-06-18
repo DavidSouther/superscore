@@ -1,4 +1,4 @@
-//     superscore pubsub.js 0.2.0
+//     superscore pubsub.js 0.2.3
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
