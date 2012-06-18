@@ -128,4 +128,4 @@ _.mixin({
 	isWindow: isWindow
 });
 
-}.call(this, _, jQuery));
+}.call(this, _, jQuery || null));
