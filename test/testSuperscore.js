@@ -22,6 +22,20 @@ test("Underscore utils", function(){
 
 module("Core");
 
+test("superscore.deep", function(){
+	expect(5);
+
+	var a = {a: true, m: {k: 3}};
+
+	equal(_.deep(a, 'a'), true, "Get simple value.");
+	equal(_.deep(a, 'b', 1), a, "Set simple value.");
+	_.deep(a, 'b', 2, true);
+	equal(_.deep(a, 'b'), 2, "Overwrote simple value.");
+	equal(_.deep(a, 'm.k'), 3, "Get complex value.");
+	_.deep(a, 'q.0.e', 'foo');
+	ok(_.isArray(a.q), "Created array intermediary.");
+});
+
 test("superscore.extend(Object, Object)", function() {
 	expect(28);
 
