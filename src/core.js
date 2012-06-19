@@ -1,4 +1,4 @@
-//     superscore core.js 0.2.4
+//     superscore core.js 0.2.5
 //     (c) 2012 David Souther
 //     superscore is freely distributable under the MIT license.
 //     For all details and documentation:
