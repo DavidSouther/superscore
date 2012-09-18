@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 			}
 		},
 		lint: {
-			files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
+			files: ['grunt.js', 'src/**/*.js']
 		},
 		docco: {
 			app: {
@@ -68,7 +68,8 @@ module.exports = function(grunt) {
 		uglify: {}
 	});
 
-	//grunt.loadNpmTasks('grunt-coffee');
+	grunt.loadNpmTasks('grunt-contrib');
+	grunt.loadNpmTasks('grunt-docco');
 
 	grunt.registerTask('default', 'clean lint docco concat min');
 };
