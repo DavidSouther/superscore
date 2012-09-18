@@ -168,4 +168,14 @@ _.isWindow = $ ? $.isWindow : function( obj ) {
 	return obj !== null && obj === obj.window;
 };
 
+_.lock = function( fn ) {
+	return function(){
+		if(!fn.__locked){
+			fn.__locked = true;
+			fn.apply(this, arguments);
+		}
+		fn.__locked = false;
+	};
+};
+
 }.call(this, _, jQuery || null));
