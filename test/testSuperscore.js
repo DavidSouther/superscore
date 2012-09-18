@@ -236,4 +236,15 @@ test("symmetricDifference", function(){
 	deepEqual(_.symmetricDifference(m, n, o), [1, 3, 5], "3-array symmetricDifference.");
 });
 
+test("Lock", function(){
+	ok(_.lock, "Lock defined.");
+	a = 0;
+	inc = _.lock(function(){
+		a++;
+		inc();
+	});
+	inc();
+	equal(a, 1, "inc entered a single time.");
+});
+
 }(_jQuery));
