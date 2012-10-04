@@ -1,4 +1,4 @@
-// superscore - v0.2.5 - 2012-09-20
+// superscore - v0.2.6 - 2012-10-04
 // https://github.com/DavidSouther/superscore
 // Copyright (c) 2012 David Souther; Licensed MIT
 

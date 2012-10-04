@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 			}
 		},
 		qunit: {
-			files: ['test/**/*.html']
+			files: ['test/*.html']
 		},
 		coffee: {
 			app: {
@@ -41,6 +41,12 @@ module.exports = function(grunt) {
 			dist: {
 				src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
 				dest: 'dist/<%= pkg.name %>.min.js'
+			}
+		},
+		watch: {
+			app: {
+				files: ['src/**/*.js'],
+				tasks: ['default']
 			}
 		},
 		jshint: {
@@ -71,5 +77,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib');
 	grunt.loadNpmTasks('grunt-docco');
 
-	grunt.registerTask('default', 'clean lint docco concat min');
+	grunt.registerTask('default', 'clean lint docco concat min qunit');
 };
