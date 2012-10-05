@@ -1,0 +1,5 @@
+{
+  "name": "superscore",
+  "version": "0.2.6",
+  "main": "dist/superscore.min.js"
+}
