@@ -1,5 +1,6 @@
 {
   "name": "superscore",
   "version": "0.2.6",
-  "main": "dist/superscore.min.js"
+  "main": "dist/superscore.min.js",
+  "depends": { "underscore": "~1.4.1" }
 }
