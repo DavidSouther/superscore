@@ -4,7 +4,7 @@
 //     For all details and documentation:
 //     https://github.com/DavidSouther/superscore
 
-(function(_){
+(function(underscore){
 	var flagsCache = {};
 	// Convert String-formatted flags into Object-formatted ones and store in cache
 	function createFlags( flags ) {
@@ -20,7 +20,7 @@
 	// Save references to some utilities
 	var slice = Array.prototype.slice;
 
-	_.Callbacks = function( flags ) {
+	underscore.Callbacks = function( flags ) {
 
 		// Convert flags from String-formatted to Object-formatted
 		// (we check in cache first)
@@ -51,10 +51,10 @@
 					actual;
 				for ( i = 0, length = args.length; i < length; i++ ) {
 					elem = args[ i ];
-					if ( _.isArray(elem) ) {
+					if ( underscore.isArray(elem) ) {
 						// Inspect recursively
 						add( elem );
-					} else if ( _.isFunction(elem) ) {
+					} else if ( underscore.isFunction(elem) ) {
 						// Add if not in unique mode and callback is not in
 						if ( !flags.unique || !self.has( elem ) ) {
 							list.push( elem );
@@ -209,10 +209,10 @@
 		return self;
 	};
 
-	_.Deferred = function( func ) {
-		var doneList = _.Callbacks( "once memory" ),
-			failList = _.Callbacks( "once memory" ),
-			progressList = _.Callbacks( "memory" ),
+	underscore.Deferred = function( func ) {
+		var doneList = underscore.Callbacks( "once memory" ),
+			failList = underscore.Callbacks( "once memory" ),
+			progressList = underscore.Callbacks( "memory" ),
 			state = "pending",
 			lists = {
 					resolve: doneList,
@@ -241,8 +241,8 @@
 							return this;
 					},
 					pipe: function( fnDone, fnFail, fnProgress ) {
-							return _.Deferred(function( newDefer ) {
-									_.each( {
+							return underscore.Deferred(function( newDefer ) {
+									underscore.each( {
 											done: [ fnDone, "resolve" ],
 											fail: [ fnFail, "reject" ],
 											progress: [ fnProgress, "notify" ]
@@ -250,10 +250,10 @@
 											var fn = data[ 0 ],
 													action = data[ 1 ],
 													returned;
-											if ( _.isFunction( fn ) ) {
+											if ( underscore.isFunction( fn ) ) {
 													deferred[ handler ](function() {
 															returned = fn.apply( this, arguments );
-															if ( returned && _.isFunction( returned.promise ) ) {
+															if ( returned && underscore.isFunction( returned.promise ) ) {
 																	returned.promise().then( newDefer.resolve, newDefer.reject, newDefer.notify );
 															} else {
 																	newDefer[ action + "With" ]( this === deferred ? newDefer : this, [ returned ] );
@@ -303,16 +303,16 @@
 	};
 
 	// Deferred helper
-	_.when = function( firstParam ) {
+	underscore.when = function( firstParam ) {
 		var args = slice.call( arguments, 0 ),
 			i = 0,
 			length = args.length,
 			pValues = new Array( length ),
 			count = length,
 			pCount = length,
-			deferred = length <= 1 && firstParam && _.isFunction( firstParam.promise ) ?
+			deferred = length <= 1 && firstParam && underscore.isFunction( firstParam.promise ) ?
 					firstParam :
-					_.Deferred(),
+					underscore.Deferred(),
 			promise = deferred.promise();
 		function resolveFunc( i ) {
 			return function( value ) {
@@ -330,7 +330,7 @@
 		}
 		if ( length > 1 ) {
 			for ( ; i < length; i++ ) {
-				if ( args[ i ] && args[ i ].promise && _.isFunction( args[ i ].promise ) ) {
+				if ( args[ i ] && args[ i ].promise && underscore.isFunction( args[ i ].promise ) ) {
 					args[ i ].promise().then( resolveFunc(i), deferred.reject, progressFunc(i) );
 				} else {
 					--count;
@@ -345,4 +345,4 @@
 		return promise;
 	};
 
-}.call(this, _));
+}.call(this, underscore));

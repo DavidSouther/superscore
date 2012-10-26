@@ -23,6 +23,6 @@
 
 asyncTest 'is awesome', !->
 	expect 1
-	require <[ ../assets/superscore.amd ]>, !(superscore)->
-		strictEqual superscore.awesome!, 'awesome', 'should be thoroughly awesome'
+	require <[ ../assets/superscore.amd ]>, !(underscore)->
+		ok underscore.UUID, 'Can UUID'
 		start!

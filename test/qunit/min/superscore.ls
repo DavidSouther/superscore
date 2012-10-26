@@ -23,4 +23,4 @@
 
 test 'is awesome', !->
 	expect 1
-	strictEqual superscore.awesome!, 'awesome', 'should be thoroughly awesome'
+	ok _.UUID, 'Can UUID'

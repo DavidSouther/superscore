@@ -3,7 +3,7 @@
 /*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
 /*global _:false, JEFRi:false, isLocal:false*/
 
-(function($){
+(function(){
 
 module("");
 
@@ -579,4 +579,4 @@ test("_.when - joined", function() {
 });
 
 
-}(_jQuery));
+}());

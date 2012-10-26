@@ -15,8 +15,8 @@ module.exports = function(grunt) {
 		},
 		concat: {
 			lib: {
-				src: ['src/**/*.ls'],
-				dest: 'build/<%= pkg.name %>.full.ls'
+				src: ['src/**/*.js'],
+				dest: 'build/<%= pkg.name %>.full.js'
 			}
 		},
 		copy: {
@@ -29,17 +29,17 @@ module.exports = function(grunt) {
 			node: {
 				src: ['build/<%= pkg.name %>.full.js'],
 				dest: 'lib/<%= pkg.name %>.js',
-				wrapper: ['', '\nmodule.exports = superscore;']
+				wrapper: ['var underscore = require("underscore");\n', '\nmodule.exports = underscore;']
 			},
 			amd: {
 				src: ['build/<%= pkg.name %>.full.js'],
 				dest: 'lib/<%= pkg.name %>.amd.js',
-				wrapper: [';define([], function(){\n', '\nreturn superscore;\n});']
+				wrapper: [';define(["../assets/underscore"], function(underscore){\nvar underscore = underscore || _;\n', '\nreturn underscore;\n});']
 			},
 			min: {
 				src: ['build/<%= pkg.name %>.full.js'],
 				dest: 'lib/<%= pkg.name %>.min.js',
-				wrapper: [';(function(){\n', '\nthis.superscore = superscore}).call(this);']
+				wrapper: [';(function(){var underscore = this._;\n', '\n}).call(this);']
 			},
 		},
 		livescript: {
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-livescript');
 	grunt.loadNpmTasks('grunt-wrap');
 
-	grunt.registerTask('build', 'concat:lib livescript:lib');
+	grunt.registerTask('build', 'concat:lib');
 	grunt.registerTask('package', 'wrap:node wrap:amd wrap:min copy:qunit');
 	grunt.registerTask('nunit', 'test');
 	grunt.registerTask('tests', 'livescript:nunit livescript:qunit nunit qunit');

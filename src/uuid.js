@@ -4,7 +4,7 @@
 //     For all details and documentation:
 //     https://github.com/DavidSouther/superscore
 
-(function(_){
+(function(underscore){
 
 // Build several namespaces, globally...
 var UUID = {};
@@ -227,11 +227,11 @@ Utf8.decode = function(strUtf) {
 	return strUni;
 };
 
-// UUID, etc are objects that need to be attached to _, not functions to be mixed in.
-_.extend(_, {
+// UUID, etc are objects that need to be attached to underscore, not functions to be mixed in.
+underscore.extend(underscore, {
 	'UUID': UUID,
 	'Utf8': Utf8,
 	'Sha1': Sha1
 });
 
-}.call(this, _));
+}.call(this, underscore));

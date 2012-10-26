@@ -29,5 +29,5 @@ exports['awesome'] =
 		test.expect 1
 		superscore = require '../../lib/superscore'
 		# tests here
-		test.equal superscore.awesome!, 'awesome', 'should be awesome.'
+		test.ok superscore.UUID, 'Can UUID.'
 		test.done!

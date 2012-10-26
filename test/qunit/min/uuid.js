@@ -3,7 +3,7 @@
 /*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
 /*global _:false, JEFRi:false, isLocal:false*/
 
-(function($){
+(function(){
 
 module("");
 
@@ -33,4 +33,4 @@ test("UUIDv5", function(){
 	equal(_.UUID.v5("southerd@gmail.com", "davidsouther.com"), "7477fb98-3481-52c0-bae6-5e9e993ecce7", "southerd@gmail.com NS: davidsouther.com");
 });
 
-}(_jQuery));
+}());
