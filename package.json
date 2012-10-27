@@ -2,7 +2,7 @@
   "name": "superscore",
   "title": "Superscore",
   "description": "Extensions to underscore.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/DavidSouther/superscore",
   "author": {
     "name": "David Souther",
@@ -32,9 +32,9 @@
     "underscore": ">= 1"
   },
   "devDependencies": {
-    "grunt-contrib-livescript": "*",
     "grunt-contrib": "*",
     "grunt-contrib-requirejs": "*",
+    "grunt-livescript": "*",
     "grunt-wrap": "*",
     "requirejs": "*",
     "grunt": "~0.3.17"

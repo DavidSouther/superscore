@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.loadNpmTasks('grunt-contrib');
-	grunt.loadNpmTasks('grunt-contrib-livescript');
+	grunt.loadNpmTasks('grunt-livescript');
 	grunt.loadNpmTasks('grunt-wrap');
 
 	grunt.registerTask('build', 'concat:lib');
