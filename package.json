@@ -35,7 +35,6 @@
     "grunt-contrib": "*",
     "grunt-contrib-requirejs": "*",
     "grunt-livescript": "*",
-    "grunt-wrap": "*",
     "requirejs": "*",
     "grunt": "~0.3.17"
   },

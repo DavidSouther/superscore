@@ -15,32 +15,31 @@ module.exports = function(grunt) {
 		},
 		concat: {
 			lib: {
-				src: ['src/**/*.js'],
+				src: ['src/*.js'],
 				dest: 'build/<%= pkg.name %>.full.js'
+			},
+			node: {
+				src: ['src/node/pre.js', 'build/<%= pkg.name %>.full.js', 'src/node/post.js'],
+				dest: 'lib/<%= pkg.name %>.js'
+			},
+			amd: {
+				src: ['src/amd/pre.js', 'build/<%= pkg.name %>.full.js', 'src/amd/post.js'],
+				dest: 'lib/<%= pkg.name %>.amd.js'
+			},
+			min: {
+				src: ['src/min/pre.js', 'build/<%= pkg.name %>.full.js', 'src/min/post.js'],
+				dest: 'lib/<%= pkg.name %>.min.js'
 			}
 		},
 		copy: {
 			qunit: {
 				src: ['lib/*'], 
 				dest: 'test/qunit/assets/'
+			},
+			qunitAmdUnderscore: {
+				src: ['node_modules/underscore/underscore.js'],
+				dest: 'test/qunit/require/'
 			}
-		},
-		wrap: {
-			node: {
-				src: ['build/<%= pkg.name %>.full.js'],
-				dest: 'lib/<%= pkg.name %>.js',
-				wrapper: ['var underscore = require("underscore");\n', '\nmodule.exports = underscore;']
-			},
-			amd: {
-				src: ['build/<%= pkg.name %>.full.js'],
-				dest: 'lib/<%= pkg.name %>.amd.js',
-				wrapper: [';define(["../assets/underscore"], function(underscore){\nvar underscore = underscore || _;\n', '\nreturn underscore;\n});']
-			},
-			min: {
-				src: ['build/<%= pkg.name %>.full.js'],
-				dest: 'lib/<%= pkg.name %>.min.js',
-				wrapper: [';(function(){var underscore = this._;\n', '\n}).call(this);']
-			},
 		},
 		livescript: {
 			lib: {
@@ -78,10 +77,9 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib');
 	grunt.loadNpmTasks('grunt-livescript');
-	grunt.loadNpmTasks('grunt-wrap');
 
 	grunt.registerTask('build', 'concat:lib');
-	grunt.registerTask('package', 'wrap:node wrap:amd wrap:min copy:qunit');
+	grunt.registerTask('package', 'concat:node concat:amd concat:min copy:qunit copy:qunitAmdUnderscore');
 	grunt.registerTask('nunit', 'test');
 	grunt.registerTask('tests', 'livescript:nunit livescript:qunit nunit qunit');
 	grunt.registerTask('default', 'clean build package tests');
