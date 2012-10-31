@@ -26,3 +26,17 @@ asyncTest 'is awesome', !->
 	require <[ ../assets/superscore.amd ]>, !(underscore)->
 		ok underscore.UUID, 'Can UUID'
 		start!
+
+asyncTest 'has request', !->
+	expect 1
+	require <[ ../assets/superscore.amd ]>, !(underscore)->
+		ok underscore.request, 'Can request'
+		start!
+
+# asyncTest 'request gets', !->
+# 	expect 1
+# 	require <[ ../assets/superscore.amd ]>, !(underscore)->
+# 		underscore.request "http://localhost:8000/data.json" .then !(d)->
+# 			data = JSON.parse d
+# 			equal data.foo, 'bar', 'Data gotten correctly.'
+# 			start!

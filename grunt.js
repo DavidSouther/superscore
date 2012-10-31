@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 		},
 		concat: {
 			lib: {
-				src: ['src/*.js'],
+				src: ['build/*.js'],
 				dest: 'build/<%= pkg.name %>.full.js'
 			},
 			node: {
@@ -32,6 +32,11 @@ module.exports = function(grunt) {
 			}
 		},
 		copy: {
+			src: {
+				files: {
+					'build/': "src/*.js"
+				}
+			},
 			qunit: {
 				src: ['lib/*'], 
 				dest: 'test/qunit/assets/'
@@ -42,10 +47,9 @@ module.exports = function(grunt) {
 			}
 		},
 		livescript: {
-			lib: {
+			src: {
 				files: {
-					'build/*.js': 'src/**/*.ls',
-					'build/<%= pkg.name %>.full.js': 'build/<%= pkg.name %>.full.ls'
+					'build/*.js': 'src/*.ls'
 				},
 				options: {
 					bare: true
@@ -64,7 +68,16 @@ module.exports = function(grunt) {
 				options: {
 					bare: true
 				}
+			},
+			jasmine: {
+				files: {
+					'test/jasmine/node/spec/tests.js': 'test/jasmine/node/**/*.ls'
+				}
 			}
+		},
+		server: {
+			port: 8000,
+			base: "./test/assets/"
 		},
 		test: {
 			files: ['test/nunit/**/*.js']
@@ -72,15 +85,22 @@ module.exports = function(grunt) {
 		qunit: {
 			files: ['test/qunit/**/*.html']
 		},
-		uglify: {}
+		jasmine_node: {
+			projectRoot: 'test/jasmine/node',
+			specFolderName: 'spec'
+		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib');
 	grunt.loadNpmTasks('grunt-livescript');
+	grunt.loadNpmTasks('grunt-jasmine-node');
 
-	grunt.registerTask('build', 'concat:lib');
+	grunt.registerTask('build', 'copy:src livescript:src concat:lib');
 	grunt.registerTask('package', 'concat:node concat:amd concat:min copy:qunit copy:qunitAmdUnderscore');
-	grunt.registerTask('nunit', 'test');
-	grunt.registerTask('tests', 'livescript:nunit livescript:qunit nunit qunit');
+	grunt.registerTask('nunit', 'livescript:nunit test');
+	grunt.registerTask('Qunit', 'livescript:qunit qunit');
+	grunt.registerTask('jasmine', 'livescript:jasmine jasmine_node');
+	grunt.registerTask('testServer', 'server');
+	grunt.registerTask('tests', 'jasmine nunit Qunit');
 	grunt.registerTask('default', 'clean build package tests');
 };
