@@ -91,6 +91,11 @@ let _ = underscore
 			d = _.Deferred!
 			d.promise!
 
+		{
+			get: get
+			post: post
+		}
+
 	if typeof window isnt \undefined # Uh oh, in the browser...
 		request = browserRequest!
 	else
