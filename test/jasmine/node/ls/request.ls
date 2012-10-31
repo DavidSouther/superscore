@@ -14,7 +14,7 @@ describe "Request", !(a)->
 	it "gets", !->
 		data = null
 		runs !->
-			_.request "http://localhost:8000/data.json" .then !(d)->
+			_.request "http://localhost:8000/test/assets/data.json" .then !(d)->
 				data := JSON.parse d
 
 		waitsFor do

@@ -33,10 +33,10 @@ asyncTest 'has request', !->
 		ok underscore.request, 'Can request'
 		start!
 
-# asyncTest 'request gets', !->
-# 	expect 1
-# 	require <[ ../assets/superscore.amd ]>, !(underscore)->
-# 		underscore.request "http://localhost:8000/data.json" .then !(d)->
-# 			data = JSON.parse d
-# 			equal data.foo, 'bar', 'Data gotten correctly.'
-# 			start!
+asyncTest 'request gets', !->
+	expect 1
+	require <[ ../assets/superscore.amd ]>, !(underscore)->
+		underscore.request "http://localhost:8000/test/assets/data.json" .then !(d)->
+			data = JSON.parse d
+			equal data.foo, 'bar', 'Data gotten correctly.'
+			start!
