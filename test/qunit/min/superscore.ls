@@ -24,3 +24,4 @@
 test 'is awesome', !->
 	expect 1
 	ok _.UUID, 'Can UUID'
+

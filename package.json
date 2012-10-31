@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "grunt-contrib": "*",
-    "grunt-contrib-requirejs": "*",
     "grunt-livescript": "*",
     "grunt-jasmine-node": "*",
     "requirejs": "*",

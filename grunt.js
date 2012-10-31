@@ -83,10 +83,12 @@ module.exports = function(grunt) {
 			files: ['test/nunit/**/*.js']
 		},
 		qunit: {
-			files: [
-				'http://localhost:8000/test/qunit/min/superscore.html',
-				'http://localhost:8000/test/qunit/require/superscore.html'
-			]
+			min: {
+				src: [ 'http://localhost:8000/test/qunit/min/superscore.html' ]
+			},
+			amd: {
+				src: [ 'http://localhost:8000/test/qunit/require/superscore.html' ]
+			}
 		},
 		jasmine_node: {
 			projectRoot: 'test/jasmine/node',
@@ -101,7 +103,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', 'copy:src livescript:src concat:lib');
 	grunt.registerTask('package', 'concat:node concat:amd concat:min copy:qunit copy:qunitAmdUnderscore');
 	grunt.registerTask('nunit', 'livescript:nunit test');
-	grunt.registerTask('Qunit', 'livescript:qunit qunit');
+	grunt.registerTask('Qunit', 'livescript:qunit qunit:min qunit:amd');
 	grunt.registerTask('jasmine', 'livescript:jasmine jasmine_node');
 	grunt.registerTask('testServer', 'server');
 	grunt.registerTask('tests', 'testServer jasmine nunit Qunit');

@@ -21,11 +21,7 @@
 		raises block, [expected], [message]
 */
 
-asyncTest 'is awesome', !->
-	expect 1
-	require <[ ../assets/superscore.amd ]>, !(underscore)->
-		ok underscore.UUID, 'Can UUID'
-		start!
+console.log "Tests loaded."
 
 asyncTest 'has request', !->
 	expect 1
@@ -40,3 +36,4 @@ asyncTest 'request gets', !->
 			data = JSON.parse d
 			equal data.foo, 'bar', 'Data gotten correctly.'
 			start!
+
