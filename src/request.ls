@@ -79,14 +79,25 @@ let _ = underscore
 			post: post
 		}
 
+	serverRequest = ->
+		request = require 'request'
+		get = (uri)->
+			d = _.Deferred!
+			request.get uri, (err, success, body)->
+				d.resolve body
+			d.promise!
+
+		post = (uri, data)->
+			d = _.Deferred!
+			d.promise!
 
 	if typeof window isnt \undefined # Uh oh, in the browser...
 		request = browserRequest!
 	else
-		request = require 'request'
+		request = serverRequest!
 
 	_.request = (uri)->
 		d = _.Deferred!
-		request.get uri, !(err, response, body)->
+		request.get uri .then (body)->
 			d.resolve body
 		d.promise!
