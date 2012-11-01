@@ -7,8 +7,9 @@
 let _ = underscore
 
 	browserRequest = ->
+		jQuery = if typeof jQuery is \undefined then null else jQuery
 		# Ajax, through jQuery if possible.
-		ajax = if typeof jQuery isnt \undefined then jQuery.ajax else (options)->
+		ajax = if jQuery then jQuery.ajax else (options)->
 			d = _.Deferred!
 
 			# Nice clean way to get an xhr
@@ -58,7 +59,7 @@ let _ = underscore
 		# get(url[, options])
 		# Shorthand for a GET request.
 
-		get = if typeof jQuery isnt \undefined then get.ajax else (url, options)->
+		get = if jQuery then jQuery.get else (url, options)->
 			options = options || {}
 			options.url = url
 			options.type = 'GET'
@@ -68,7 +69,7 @@ let _ = underscore
 		# post(url[, options])
 		# Shorthand for a POST request.
 
-		post = if typeof jQuery isnt \undefined then jQuery.post else (url, options)->
+		post = if jQuery then jQuery.post else (url, options)->
 			options = options || {}
 			options.url = url
 			options.type = 'POST'
