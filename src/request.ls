@@ -12,6 +12,7 @@ let _ = underscore
 		ajax = if jQuery then jQuery.ajax else (options)->
 			d = _.Deferred!
 
+
 			# Nice clean way to get an xhr
 			XHR = window.ActiveXObject || XMLHttpRequest
 			xhr = new XHR 'Microsoft.XMLHTTP'
@@ -84,6 +85,7 @@ let _ = underscore
 		request = require 'request'
 		get = (uri)->
 			d = _.Deferred!
+			console.log "Getting with URI: !#{uri}!"
 			request.get uri, (err, success, body)->
 				d.resolve body
 			d.promise!
@@ -104,6 +106,9 @@ let _ = underscore
 
 	_.request = (uri)->
 		d = _.Deferred!
-		request.get uri .then (body)->
-			d.resolve body
+		# Consistently handle "" for requests
+		if uri is ""
+			setTimeout (-> d.resolve ""), 0
+		else
+			request.get uri .then (-> d.resolve it)
 		d.promise!

@@ -18,10 +18,18 @@ describe "Request", !(a)->
 				data := JSON.parse d
 
 		waitsFor do
-			->
-				data isnt null
+			-> data isnt null
 			"data to get returned"
 			1000
 
 		runs !->
 			expect(data.foo).toMatch /bar/
+
+	it "returns an empty success on empty request", !->
+		done = false
+		runs !->
+			_.request "" .then !(d)->
+				expect d .toMatch /^$/
+				done := true
+
+		waitsFor -> done 
