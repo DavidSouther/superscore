@@ -85,7 +85,6 @@ let _ = underscore
 		request = require 'request'
 		get = (uri)->
 			d = _.Deferred!
-			console.log "Getting with URI: !#{uri}!"
 			request.get uri, (err, success, body)->
 				d.resolve body
 			d.promise!
