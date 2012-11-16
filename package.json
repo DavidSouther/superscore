@@ -36,6 +36,7 @@
     "grunt-contrib": "*",
     "grunt-livescript": "*",
     "grunt-jasmine-node": "*",
+    "grunt-docco": "*",
     "requirejs": "*",
     "grunt": "~0.3.17"
   },

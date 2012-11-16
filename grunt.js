@@ -93,12 +93,18 @@ module.exports = function(grunt) {
 		jasmine_node: {
 			projectRoot: 'test/jasmine/node',
 			specFolderName: 'spec'
+		},
+		docco: {
+			app: {
+				src: ['src/*s']
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib');
 	grunt.loadNpmTasks('grunt-livescript');
 	grunt.loadNpmTasks('grunt-jasmine-node');
+	grunt.loadNpmTasks('grunt-docco');
 
 	grunt.registerTask('build', 'copy:src livescript:src concat:lib');
 	grunt.registerTask('package', 'concat:node concat:amd concat:min copy:qunit copy:qunitAmdUnderscore');
@@ -107,5 +113,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('jasmine', 'livescript:jasmine jasmine_node');
 	grunt.registerTask('testServer', 'server');
 	grunt.registerTask('tests', 'testServer jasmine nunit Qunit');
-	grunt.registerTask('default', 'clean build package tests');
+	grunt.registerTask('default', 'clean build package tests docco');
 };
