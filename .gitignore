@@ -1,0 +1,12 @@
+build/
+node_modules/
+test/jasmine/node/spec/
+
+
+test/nunit/tests.js
+test/qunit/assets/superscore.amd.js
+test/qunit/assets/superscore.js
+test/qunit/assets/superscore.min.js
+test/qunit/min/tests.js
+test/qunit/require/tests.js
+test/qunit/require/underscore.js
