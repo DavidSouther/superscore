@@ -76,10 +76,8 @@ let _ = underscore
 			options.type = 'POST'
 			ajax options
 
-		{
-			get: get
-			post: post
-		}
+		get: get
+		post: post
 
 	serverRequest = ->
 		request = require 'request'
@@ -93,10 +91,8 @@ let _ = underscore
 			d = _.Deferred!
 			d.promise!
 
-		{
-			get: get
-			post: post
-		}
+		get: get
+		post: post
 
 	if typeof window isnt \undefined # Uh oh, in the browser...
 		request = browserRequest!
@@ -109,5 +105,7 @@ let _ = underscore
 		if uri is ""
 			setTimeout (-> d.resolve ""), 0
 		else
-			request.get uri .then (-> d.resolve it)
+			_.request.get uri .then (-> d.resolve it)
 		d.promise!
+
+	_.request <<< request

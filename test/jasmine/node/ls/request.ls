@@ -33,3 +33,7 @@ describe "Request", !(a)->
 				done := true
 
 		waitsFor -> done 
+
+	it "exposes get and post directly", !->
+		expect _.request.get .toBeFunction!
+		expect _.request.post .toBeFunction!
