@@ -23,32 +23,27 @@ let _ = underscore
 			# Most likely sending text/plain
 			if  'overrideMimeType' in xhr
 				xhr.overrideMimeType options.dataType || 'text/plain'
-			
-			
+
 			# Handle state changes.
 			xhr.onreadystatechange = ->
 				if  xhr.readyState === 4
 					if ((_ref = xhr.status) === 0 || _ref === 200)
 						# Resolve on success.
-						d.resolve xhr.responseText
+						resolution = xhr.responseText
+						if options.dataType is "application/json"
+							resolution = JSON.parse resolution
+						d.resolve resolution
 					else
-
 						# Reject on failure.
 						d.reject new Error "Could not load " + options.url
-					
 					return
-				
 
 				# Notify for any other events.
 				d.notify xhr
-			
 
 			# We'll need to set headers to send the data.
 			if options.data
-				xhr.setRequestHeader "Content-type", "application/x-www-form-urlencoded"
-				xhr.setRequestHeader "Content-length", options.data.length
-				xhr.setRequestHeader "Connection", "close"
-			
+				xhr.setRequestHeader "Content-type", options.dataType || "application/x-www-form-urlencoded"
 
 			# Execute the request.
 			xhr.send options.data || null
