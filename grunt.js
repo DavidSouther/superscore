@@ -92,7 +92,9 @@ module.exports = function(grunt) {
 		},
 		jasmine_node: {
 			projectRoot: 'test/jasmine/node',
-			specFolderName: 'spec'
+			specFolderName: 'spec',
+			match: "",
+			matchall: true
 		},
 		docco: {
 			app: {
