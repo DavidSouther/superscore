@@ -42,9 +42,13 @@ let _ = underscore
 			o.__event_handler = o.__event_handler || []
 			o.__event_advisor = o.__event_advisor || []
 
+	function marshal ev
+		->
+			_.Event[ev].apply null, [@] ++ [].slice.call &
+
 	@<<<
-		observe$: !-> _.Event.observe.apply null, _.flatten(@, &)
-		off$: !-> _.Event.off.apply null, _.flatten(@, &)
-		advise$: !-> _.Event.advise.apply null, _.flatten(@, &)
-		unadvise$: !-> _.Event.unadvise.apply null, _.flatten(@, &)
-		trigger$: -> _.Event.trigger.apply null, _.flatten(@, &)
+		observe$: marshal \observe
+		off$: marshal \off
+		advise$: marshal \advise
+		unadvise$: marshal \unadvise
+		trigger$: marshal \trigger
