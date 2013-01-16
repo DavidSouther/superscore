@@ -82,8 +82,17 @@ let _ = underscore
 				d.resolve body
 			d.promise!
 
-		post = (uri, data)->
+		post = (uri, options)->
 			d = _.Deferred!
+			if options.data
+				options.body = options.data.toString!
+				delete options.data
+			if options.dataType
+				options.{}headers <<<
+					"Content-type": options.dataType
+				delete options.dataType
+			request.post uri, options, (err, success, body)->
+				d.resolve body
 			d.promise!
 
 		get: get
